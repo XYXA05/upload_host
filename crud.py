@@ -39,18 +39,23 @@ async def usercreate_file(db: Session, files: List[UploadFile], user_id: int, po
         uploaded_files.append(uploaded_file)
     
     return schemas.UserCreate_Files(files=uploaded_files)
+def get_image_path_by_position_and_id_owner(db: Session, position: int, owner_id: int):
+    file = db.query(models.UserCreate_File).filter(
+        models.UserCreate_File.position == position,
+        models.UserCreate_File.owner_id == owner_id
+    ).first()
+    
+    if file:
+        return file.file_path
+    return None
 def get_image_item_path_by_position_and_id(db: Session, item_create_about_id: int):
     file = db.query(models.File_new_build_apartment_ItemCreate_about).filter(
         models.File_new_build_apartment_ItemCreate_about.item_create_about_id == item_create_about_id
     ).first()
     
     if file:
-        if os.path.exists(file.file_path):
-            return file.file_path
-        else:
-            raise HTTPException(status_code=404, detail="File not found")
+        return file.file_path
     return None
-
 
 async def upload_file_about(db: Session, files: List[UploadFile], user_id: int):
     uploaded_files = []
@@ -82,14 +87,6 @@ async def upload_file_about(db: Session, files: List[UploadFile], user_id: int):
 
 
 
-def get_image_item_path_by_position_and_id(db: Session, item_create_about_id: int):
-    file = db.query(models.File_new_build_apartment_ItemCreate_about).filter(
-        models.File_new_build_apartment_ItemCreate_about.item_create_about_id == item_create_about_id
-    ).first()
-    
-    if file:
-        return file.file_path
-    return None
 
 async def upload_file_compan(db: Session, files: List[UploadFile], new_build_apartment_id: int, position: int):
     uploaded_files = []
