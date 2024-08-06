@@ -46,7 +46,8 @@ def get_image_path_by_position_and_id_owner(db: Session, position: int, owner_id
     if file:
         return file.file_path
     return None
-############
+
+
 async def upload_file_about(db: Session, files: List[UploadFile], user_id: int):
     uploaded_files = []
     for file in files:
@@ -83,11 +84,6 @@ def get_image_item_path_by_position_and_id(db: Session, item_create_about_id: in
     if file:
         return file.file_path
     return None
-
-
-
-
-
 
 async def upload_file_compan(db: Session, files: List[UploadFile], new_build_apartment_id: int, position: int):
     uploaded_files = []
@@ -169,10 +165,6 @@ def get_image_path_by_id_description(db: Session, new_build_apartment_descriptio
     return None
 
 
-
-
-
-
 async def upload_file_construction_monitoring(db: Session, files: List[UploadFile], new_build_apartment_id: int, position: int, date: str, namber_build_andsection: str):
     uploaded_files = []
     for file in files:
@@ -209,15 +201,12 @@ async def upload_file_construction_monitoring(db: Session, files: List[UploadFil
     return schemas.File_construction_monitorings(files=uploaded_files)
 
 
-
 def get_images_by_new_build_apartment_id(db: Session, new_build_apartment_id: int):
     files = db.query(models.File_new_build_apartment_construction_monitoring).filter(
         models.File_new_build_apartment_construction_monitoring.new_build_apartment_id == new_build_apartment_id
     ).all()
     
     return files
-
-
 
 async def upload_files(db: Session, files: List[UploadFile], position: int, new_build_apartment_id: int):
     uploaded_files = []
@@ -287,7 +276,6 @@ async def upload_file_monitoring_360(db: Session, files: List[UploadFile], date:
         uploaded_files.append(uploaded_file)
     
     return schemas.File_new_build_apartment_aerial_survey_360s(files=uploaded_files)
-
 
 async def upload_3d_model(db: Session, files: List[UploadFile], new_build_apartment_id: int):
     uploaded_files = []

@@ -1,9 +1,11 @@
-from typing import List
-from fastapi import Depends, APIRouter, Form, HTTPException, File, Query, UploadFile
+from fastapi import Depends, APIRouter, Form, HTTPException, File, Query, UploadFile, logger
 from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
+from typing import Annotated, List, Optional
 import crud, schemas, models
 from database import SessionLocal, engine
+import shutil
 models.Base.metadata.create_all(bind=engine)
 
 def get_db():
@@ -33,7 +35,6 @@ async def get_image_owner( item_create_about_id: int, db: Session = Depends(get_
     if not file_path:
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path, media_type='image/jpeg') 
-
 
 
 @router.post("/upload_file_compan/{item_id}", response_model=schemas.UserCreate_Files)
@@ -76,7 +77,6 @@ async def get_image(position: int, new_build_apartment_id: int, db: Session = De
     if not file_path:
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path, media_type='video/mp4') 
-
 
 
 
@@ -154,9 +154,6 @@ async def get_image_monitoring(file_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="File not found")
 
     return StreamingResponse(open(file.file_path, "rb"), media_type=file.content_type)
-
-
-
 
 
 @router.post("/upload_monitoring_360/{new_build_apartment_id}", response_model=schemas.File_new_build_apartment_aerial_survey_360s)
@@ -238,4 +235,3 @@ async def get_3d_models(new_build_apartment_id: int, db: Session = Depends(get_d
         file_responses.append(file_response)
     
     return schemas.User_3D_File_models(files=file_responses)
-
