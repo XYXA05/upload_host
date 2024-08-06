@@ -55,6 +55,8 @@ async def upload_file_about(db: Session, files: List[UploadFile], user_id: int):
     uploaded_files = []
     for file in files:
         file_location = f"./uploads/about/{file.filename}"
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+
         with open(file_location, "wb") as buffer:
             buffer.write(file.file.read())
         
@@ -92,6 +94,9 @@ async def upload_file_compan(db: Session, files: List[UploadFile], new_build_apa
     uploaded_files = []
     for file in files:
         file_location = f"./uploads/main_page/{file.filename}"
+
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+
         with open(file_location, "wb") as buffer:
             buffer.write(file.file.read())
         
@@ -133,6 +138,9 @@ async def upload_files_plan(db: Session, files: List[UploadFile], new_build_apar
     uploaded_files = []
     for  file in files:
         file_location = f"./uploads/plan/{file.filename}"
+
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+
         with open(file_location, "wb") as buffer:
             buffer.write(file.file.read())
         
@@ -172,6 +180,9 @@ async def upload_file_construction_monitoring(db: Session, files: List[UploadFil
     uploaded_files = []
     for file in files:
         file_location = f"./uploads/construction_monitoring/{file.filename}"
+
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+
         with open(file_location, "wb") as buffer:
             buffer.write(file.file.read())
 
@@ -215,6 +226,8 @@ async def upload_files(db: Session, files: List[UploadFile], position: int, new_
     uploaded_files = []
     for file in files:
         file_location = f"./uploads/main_page/{file.filename}"
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+
         with open(file_location, "wb") as buffer:
             buffer.write(file.file.read())
         
@@ -253,6 +266,9 @@ async def upload_file_monitoring_360(db: Session, files: List[UploadFile], date:
     uploaded_files = []   
     for file in files:
         file_location = f"./uploads/monitoring_360/{file.filename}"
+
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+
         with open(file_location, "wb") as buffer:
             buffer.write(file.file.read())
         
@@ -284,6 +300,9 @@ async def upload_3d_model(db: Session, files: List[UploadFile], new_build_apartm
     uploaded_files = []
     for  file in files:
         file_location = f"./uploads/3d_model/{file.filename}"
+        
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+
         with open(file_location, "wb") as buffer:
             buffer.write(file.file.read())
         
