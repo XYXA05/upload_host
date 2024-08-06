@@ -47,9 +47,7 @@ def get_image_path_by_position_and_id_owner(db: Session, position: int, owner_id
     ).first()
     
     if file:
-        print(f"File path retrieved: {file.file_path}")
         return file.file_path
-    print("File not found in database")
     return None
 
 def get_image_item_path_by_position_and_id(db: Session, item_create_about_id: int):
