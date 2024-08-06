@@ -46,7 +46,10 @@ def get_image_path_by_position_and_id_owner(db: Session, position: int, owner_id
     ).first()
     
     if file:
-        return file.file_path
+        if os.path.exists(file.file_path):
+            return file.file_path
+        else:
+            raise HTTPException(status_code=404, detail="File not found")
     return None
 def get_image_item_path_by_position_and_id(db: Session, item_create_about_id: int):
     file = db.query(models.File_new_build_apartment_ItemCreate_about).filter(
@@ -54,8 +57,12 @@ def get_image_item_path_by_position_and_id(db: Session, item_create_about_id: in
     ).first()
     
     if file:
-        return file.file_path
+        if os.path.exists(file.file_path):
+            return file.file_path
+        else:
+            raise HTTPException(status_code=404, detail="File not found")
     return None
+
 
 async def upload_file_about(db: Session, files: List[UploadFile], user_id: int):
     uploaded_files = []
