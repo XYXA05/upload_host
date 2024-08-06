@@ -55,7 +55,7 @@ async def get_image_owner(position: int, owner_id: int, db: Session = Depends(ge
     file_path = crud.get_image_path_by_position_and_id_owner(db, position, owner_id)
     if not file_path:
         raise HTTPException(status_code=404, detail="File not found")
-    return FileResponse(file_path, media_type='video/mp4') 
+    return FileResponse(file_path, media_type='video/mp4')
 
 
 @router.post("/upload/{new_build_apartment_id}", response_model=schemas.Files)

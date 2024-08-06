@@ -1,5 +1,6 @@
 
 import logging
+import os
 from typing import List, Optional
 from fastapi import UploadFile
 from sqlalchemy.orm import Session, joinedload
@@ -11,8 +12,10 @@ async def usercreate_file(db: Session, files: List[UploadFile], user_id: int, po
     uploaded_files = []
     for file in files:
         file_location = f"./uploads/upload_file_company/{file.filename}"
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+        
         with open(file_location, "wb") as buffer:
-            buffer.write(file.file.read())
+            buffer.write(await file.read())  # Ensure to await the read method
         
         file_db = schemas.UserCreate_File_Create(
             filename=file.filename,
